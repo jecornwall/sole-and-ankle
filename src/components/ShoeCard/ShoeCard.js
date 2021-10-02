@@ -31,6 +31,15 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  let marketing_tag;
+  if (variant == 'new-release') {
+    marketing_tag = <MarketingTag color={COLORS.secondary}> Just released! </MarketingTag>
+  } else if (variant == 'on-sale') {
+    marketing_tag = <MarketingTag color={COLORS.primary}> Sale </MarketingTag>
+  } else {
+    marketing_tag = ""
+  }
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
@@ -46,6 +55,7 @@ const ShoeCard = ({
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
         </Row>
       </Wrapper>
+      {marketing_tag}
     </Link>
   );
 };
@@ -53,18 +63,28 @@ const ShoeCard = ({
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  flex: 1 1 250px;
+  min-width: 150px;
+  position: relative;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -82,5 +102,15 @@ const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};
 `;
+
+const MarketingTag = styled.div`
+  background-color: ${props => props.color};
+  color: ${COLORS.white};
+  position: absolute;
+  z-index: 1;
+  top: 8px;
+  right: -8px;
+  padding: 8px;
+`
 
 export default ShoeCard;
